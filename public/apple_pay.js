@@ -119,18 +119,43 @@ document.addEventListener("DOMContentLoaded", function () {
             // };
 
             // Handle payment authorization
-            session.onpaymentauthorized = function(event) {
+            // session.onpaymentauthorized = function(event) {
+        
+            //   console.log(ApplePaySession.STATUS_SUCCESS);
+            //   console.log('authorization', event);
+            //   session.completePayment(ApplePaySession.STATUS_SUCCESS);
+           
+            // };
+
+            session.onpaymentauthorized = function (event) {
               // Process the payment using the event.payment.token object
               // Call session.completePayment with a success or failure status
               console.log(ApplePaySession.STATUS_SUCCESS);
               console.log('authorization', event);
-              session.completePayment(ApplePaySession.STATUS_SUCCESS);
+              // Call your custom function for processing the order and capturing the payment
+              processPayment(event.payment);
+
+
+
+              
             };
 
             // Start the Apple Pay session
             session.begin();
 
+            function processPayment(payment) {
+
+              const myToken= payment.token
+              console.log(myToken);
+              
+            }
+
+
+
+
+
           });
     }
+    
   }
 });

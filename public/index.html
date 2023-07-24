@@ -1,0 +1,14 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id='uniquePaymentsDivId'></div>
+    <!-- <button id='apple_pay_button' onclick="payFabricSDKLoaded()" style="display: none;">Apple Pay</button> -->
+    <button id="evobutton" onclick="payFabricSDKLoaded()">Eo pay</button>
+    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+    <apple-pay-button id="apple-pay-button" buttonstyle="black" type="buy" locale="en"></apple-pay-button>
+    <script src="./apple_pay.js"></script>
+    <script src="https://www.payfabric.com/Payment/WebGate/Content/bundles/payfabricpayments.bundle.min.js" 
+    type="text/javascript"></script>
+  </body>
+</html>

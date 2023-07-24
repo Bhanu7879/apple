@@ -59,21 +59,55 @@ document.addEventListener("DOMContentLoaded", function () {
             var session = new ApplePaySession(14, paymentRequest);
             console.log(session)
 
-             session.onvalidatemerchant = event => {
+             session.onvalidatemerchant = async event => {
               console.log(event)
-              var validationURL = "http://internal-apcoa-dev-internal-elb-1674191319.ap-south-1.elb.amazonaws.com:5030/v1/consumers/payments/applePay";
-
+              var validationURL = event.validationURL;
+              try {
+                // Make a POST request to your server with the validationURL
+                const response = await fetch('/api/apple-pay/validate', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    "applePayUrl":"https://apple-pay-gateway-cert.apple.com/paymentservices/startSession"
+                  },
+               //   body: JSON.stringify({ validationURL }),
+               body:{"merchantIdentifier": "merchant.com.getmyparking.consumer.development",
+               "displayName": "MyStore",
+               "initiative": "web",
+               "initiativeContext": "https://master--transcendent-brigadeiros-3c74ae.netlify.app/"}
+                });
+          
+                // Assuming your server responds with the validation result as JSON
+               const validationResult = await response.json();
+               if (validationResult && validationResult.success) {
+                console.log("Merchant validation successful");
+                // Call session.completeMerchantValidation with the validationResult
+             const result=    session.completeMerchantValidation(validationResult);
+             console.log(result)
+              } else {
+                console.log("Merchant validation failed");
+                // If the validationResult indicates a failure, you can handle it accordingly.
+                // For example, you might show an error message to the user or cancel the payment.
+                // session.abort(); // Abort the payment session if validation fails.
+              }
+            } catch (error) {
+              console.log("Error validating merchant", error);
+              }
                 // Call your own server to request a new merchant session.
-              fetch(validationURL)
-              .then(res => res.json()) // Parse response as JSON.
-              .then(merchantSession => {
-                console.log(merchantSession)
-                session.completeMerchantValidation(merchantSession);
-              })
-              .catch(err => {
-                console.error("Error fetching merchant session", err);
-              });
-          };
+              // fetch(validationURL)
+              // .then(res => res.json()) // Parse response as JSON.
+              // .then(merchantSession => {
+              //   console.log(merchantSession)
+              //   session.completeMerchantValidation(merchantSession);
+              // })
+            
+              // catch (error){
+              //   console.log(error)
+              // }
+            
+            
+            
+            }
 
           console.log('After validation');
             // // Handle shipping method selection

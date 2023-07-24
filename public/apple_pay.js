@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
              session.onvalidatemerchant = event => {
               console.log(event)
-              var validationURL = event.validationURL;
+              var validationURL = "http://internal-apcoa-dev-internal-elb-1674191319.ap-south-1.elb.amazonaws.com:5030/v1/consumers/payments/applePay";
 
                 // Call your own server to request a new merchant session.
               fetch(validationURL)

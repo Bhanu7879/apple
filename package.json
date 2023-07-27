@@ -5,7 +5,8 @@
     "https": "^1.0.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build":"npm run build"
   },
   "name": "archive",
   "version": "1.0.0",

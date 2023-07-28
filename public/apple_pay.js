@@ -59,13 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
             var session = new ApplePaySession(3, paymentRequest);
             console.log(session)
 
-             session.onvalidatemerchant = async event => {
+             session.onvalidatemerchant = event => {
               console.log(event)
            
               var validationURL = event.validationURL;
-              try {
                 // Make a POST request to your server with the validationURL
-                const response = await fetch('https://dev.getsmartparking.com/authentication/v1/consumer/payment/applePayValidation', {
+              fetch('https://dev.getsmartparking.com/authentication/v1/consumer/payment/applePayValidation', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -75,45 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
                "displayName": "MyStore",
                "initiative": "web",
                "initiativeContext": "https://master--transcendent-brigadeiros-3c74ae.netlify.app/"})})
-          
-                // Assuming your server responds with the validation result as JSON
-               const validationResult = await response.json();
-               if (validationResult ) {
-                console.log("Merchant validation successful");
-                // Call session.completeMerchantValidation with the validationResult
-             
-             try{
-                const result=    session.completeMerchantValidation(validationResult);
-                console.log(result)
-              }
-                
-                catch(e){
-                  console.log(e)
-                }
-           
-              } else {
-                console.log("Merchant validation failed");
-                // If the validationResult indicates a failure, you can handle it accordingly.
-                // For example, you might show an error message to the user or cancel the payment.
-                // session.abort(); // Abort the payment session if validation fails.
-              }
-            } catch (error) {
-              console.log("Error validating merchant", error);
-              }
-                // Call your own server to request a new merchant session.
-              // fetch(validationURL)
-              // .then(res => res.json()) // Parse response as JSON.
-              // .then(merchantSession => {
-              //   console.log(merchantSession)
-              //   session.completeMerchantValidation(merchantSession);
-              // })
-            
-              // catch (error){
-              //   console.log(error)
-              // }
-          
-            
-            
+               .then(res => res.json())
+                    .then(merchantSession => {
+                      session.completeMerchantValidation(merchantSession);
+                    })
+                    .catch(err => {
+                      console.error("Error fetching merchant session", err);
+                    });
             }
 
           console.log('After validation');
@@ -152,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function processPayment(payment) {
 
               const myToken= payment.token
-              console.log(myToken);
+              console.log(myToken,"hihi");
               
             }
 
@@ -165,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
   }
 });
-
 
 
 

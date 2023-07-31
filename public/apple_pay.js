@@ -73,9 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
                body: JSON.stringify({"merchantIdentifier": "merchant.com.getmyparking.consumer.development",
                "displayName": "MyStore",
                "initiative": "web",
-               "initiativeContext": "https://master--transcendent-brigadeiros-3c74ae.netlify.app/"})})
+               "initiativeContext": "master--lambent-naiad-cfb056.netlify.app/"})})
                .then(res => res.json())
                     .then(merchantSession => {
+                      console.log('Session Object', merchantSession);
                       session.completeMerchantValidation(merchantSession);
                     })
                     .catch(err => {
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
   }
 });
+
 
 
 

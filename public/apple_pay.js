@@ -45,14 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log('button', button);
           button.addEventListener("click", function () {
             var paymentRequest = {
-              merchantIdentifier: merchantIdentifier,
-              countryCode: "US",
-              currencyCode: "USD",
-              supportedNetworks: ["visa", "masterCard", "amex"],
+             
+              countryCode: "AE",
+              currencyCode: "AED",
+              supportedNetworks: ["visa", "masterCard"],
               merchantCapabilities: ["supports3DS"],
               total: {
                 label: "My Product",
-                amount: "1.00",
+                amount: "1.0",
               },
             };
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
                body: JSON.stringify({"merchantIdentifier": "merchant.com.getmyparking.consumer.development",
                "displayName": "MyStore",
                "initiative": "web",
-               "initiativeContext": "master--lambent-naiad-cfb056.netlify.app/"})})
+               "initiativeContext": "master--lambent-naiad-cfb056.netlify.app"})})
                .then(res => res.json())
                     .then(merchantSession => {
                       console.log('Session Object', merchantSession);
